@@ -12,6 +12,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
+
           "options": {
             "outputPath": "dist/angular-boilerplate",
             "index": "src/index.html",
@@ -28,9 +29,13 @@
               
             ],
             "scripts": [
+              
                "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              
             ]
           },
+
+          
           "configurations": {
             "production": {
               "budgets": [

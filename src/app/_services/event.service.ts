@@ -75,6 +75,8 @@ export class EventService {
         })
       );
   }
+  
+  
 
   // Get events by account ID
   getEventsByAccountId(accountId: number): Observable<any[]> {

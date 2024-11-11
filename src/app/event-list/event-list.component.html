@@ -1,33 +1,242 @@
+<link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet">
+
+
 <br>
 <br>
-<br>
-<br>
+<div class="content">
+  <!-- Welcome Banner -->
+  <div class="welcome-banner">
+      <h1>JuanBayan  Events</h1>
+      <p>Join the events in making a positive impact through our ongoing events.</p>
+  </div>
 <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-  <h2 style="text-align: center; margin: 20px 0; font-family: Arial, sans-serif; color: #333;">Approved Active Events</h2>
+  <h2 style=" margin: 20px 0; font-family: Arial, sans-serif; color: #333;">
+    Approved Active Events
+  </h2>
 
   <!-- Display events if available -->
   <div *ngIf="activeApprovedEvents.length > 0; else noEvents" class="events-grid">
     <div *ngFor="let event of activeApprovedEvents" class="event-card" (click)="viewEventDetails(event.Event_ID)">
       
+      <!-- Badge for event start date -->
       <div class="event-badge">
         <h3>{{ event.Event_Start_Date | date: 'd' }}</h3>
         <p>{{ event.Event_Start_Date | date: 'MMMM' }}</p>
       </div>
 
+      <!-- Event image -->
       <div class="event-image">
         <img [src]="getImagePath(event.Event_Image)" alt="{{ event.Event_Name }}" 
              (error)="this.src='assets/jb-symbol-logo.png'" />
       </div>
 
-      <strong>{{ event.Event_Name }}</strong>
-      <p>{{ event.Event_Description }}</p>
-      <p><strong>Location:</strong> {{ event.Event_Location }}</p>
-      <!--<span class="event-status">Approved</span>-->
+      <!-- Event details -->
+      <div class="event-details">
+        <strong class="event-title">{{ event.Event_Name }}</strong>
+        <p class="event-description">{{ event.Event_Description }}</p>
+        <p class="event-location"><strong>Location:</strong> {{ event.Event_Location }}</p>
+        <div class="event-meta">
+          <span class="views">👁️ 9,125</span>
+          <span class="comments">💬 3</span>
+          <span class="event-date">📅 {{ event.Event_Start_Date | date: 'EEE, MMM d' }}</span>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- Message if no events available -->
-  <ng-template #noEvents>
-    <div class="alert alert-info">No active, approved events available at this time.</div>
-  </ng-template>
 </div>
+
+      <!-- Message if no events available -->
+      <ng-template #noEvents>
+          <div class="alert alert-info">No active, approved events available at this time.</div>
+          </ng-template>
+
+             <!-- Additional Section for Event Organizers Message -->
+          <div class="event-organizer-message" id="organizerMessage">
+            <h3>Event organizing on JUANBAYAN is easy, powerful, and trusted.</h3>
+          </div>
+        </div>
+
+<style>
+/* Full-page background */
+body {
+    background-color: #f7f9fc; /* Light background */
+    color: #333; /* Dark text */
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
+                        url('https://images.pexels.com/photos/6995245/pexels-photo-6995245.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: #f8f8f8;
+    padding: 110px 0;
+    text-align: center;
+}
+
+/* Fade-in Animation for Text */
+.welcome-banner h1 {
+    opacity: 0; /* Start with text invisible */
+    animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+}
+
+.welcome-banner p {
+    opacity: 0; /* Start with text invisible */
+    animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+    animation-delay: 1s; /* Delay the fade-in by 1 second */
+}
+
+/* Fade-in Keyframe */
+@keyframes fadeInText {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+  .events-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.event-card {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.event-card:hover {
+  transform: scale(1.05);
+}
+
+.event-badge {
+  background-color: #2f8a3e;
+  padding: 8px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.event-badge h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #f8f3f3;
+}
+
+.event-badge p {
+  margin: 0;
+  font-size: 16px;
+  color: #f8f3f3;
+}
+
+.event-image img {
+  width: 100%;
+  height: auto;
+}
+
+.event-details {
+  padding: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.event-title {
+  font-size: 18px;
+  color: #333;
+  margin: 10px 0;
+}
+
+.event-description {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.event-location {
+  font-size: 14px;
+  color: #444;
+}
+
+.event-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  color: #888;
+  align-items: center;
+}
+
+.event-meta span {
+  display: flex;
+  align-items: center;
+}
+/* Event Organizers Message Styling */
+.event-organizer-message {
+    background-color: #30855a; /* Light yellow background */
+    padding: 40px 20px; /* Increased top/bottom padding to give more space */
+    margin-top: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: justify; /* Justify text for proper alignment */
+    opacity: 0; /* Start invisible */
+    animation: popupAnimation 1s ease-out forwards; /* Apply pop-up animation */
+    border-top:  1px solid #d3d0d0; /* Top border */
+    border-bottom: 1% solid #272626; /* Bottom border */
+    
+    /* Center the message in its parent container */
+    width: 60%; /* Ensure it takes up the full width of the container */
+    margin: 50px auto; /* Center the element horizontally and add top/bottom margins */
+    max-width: 100%; /* Ensure it extends fully */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the content vertically */
+    align-items: center; /* Center the content horizontally */
+}
+
+/* Animation for pop-up effect when scrolled into view */
+@keyframes popupAnimation {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.event-organizer-message h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 15px;
+    text-align: center;
+    font-family: 'Mansalva', cursive; /* Sets font to Mansalva and makes it cursive */
+    font-style: italic;
+}
+
+.event-organizer-message p {
+    font-size: 1.1rem;
+    color: #ffffff;
+    line-height: 1.6; /* Added line height for better readability */
+    text-align: justify; /* Justify text in paragraphs */
+}
+
+/* Media query to adjust the styling on smaller screens */
+@media (max-width: 768px) {
+    .event-organizer-message {
+        padding: 20px 10px; /* Reduce padding for smaller screens */
+    }
+    .event-organizer-message h3 {
+        font-size: 1.5rem;
+    }
+    .event-organizer-message p {
+        font-size: 1rem;
+    }
+}
+
+</style>

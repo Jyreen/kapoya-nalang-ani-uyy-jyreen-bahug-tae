@@ -31,6 +31,9 @@ import { EventDetailsComponent } from './event-list/event-details.component';
 import { TermsAndConditionsModalComponent } from './event-list/event-terms-condition.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { CreateEventComponent } from './events/create-event.component';
+import { DonorDashboardComponent } from './donordash/donor-dashboard.component';
+import { BeneficiaryDashboardComponent } from './beneficary/beneficiary-dashboard.component';
+
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -68,7 +71,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         CreateEventComponent,
         EventListComponent,
         EventDetailsComponent,
-        TermsAndConditionsModalComponent
+        TermsAndConditionsModalComponent,
+        DonorDashboardComponent,
+        BeneficiaryDashboardComponent
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

@@ -1,32 +1,39 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+/>
 
 <!-- Campaign Header with Back Logo -->
-<section class="campaign-header">
+<section class="campaign-header text-center text-white py-5">
   <div class="container">
-    <h1>Campaign Details</h1>
+    <h1 class="display-4">Campaign Details</h1>
   </div>
 </section>
 
 <!-- Campaign Details Section -->
-<section class="campaign-details">
+<section class="campaign-details py-5">
   <div class="container">
     <div class="row">
       <!-- Left Column: Campaign Image and Description -->
       <div class="col-md-8 mb-4">
-        <div class="card border-0">
-          <img [src]="getImagePath('assets/' + campaign?.Campaign_Image)" alt="{{ campaign?.Campaign_Name }} Image" class="campaign-image">
+        <div class="card border-0 shadow-sm">
+          <img
+            [src]="getImagePath('assets/' + campaign?.Campaign_Image)"
+            alt="{{ campaign?.Campaign_Name }} Image"
+            class="card-img-top campaign-image rounded"
+          />
           <div class="card-body">
-            <h2 class="card-title">{{ campaign?.Campaign_Name }}</h2>
-            <p class="campaign-target">
+            <h2 class="card-title mb-3">{{ campaign?.Campaign_Name }}</h2>
+            <p class="campaign-target fw-bold">
               Target Fund: {{ campaign?.Campaign_TargetFund | currency: 'PHP':'symbol':'1.2-2' }}
             </p>
-            <p class="campaign-raised">
+            <p class="campaign-raised text-success fw-bold">
               Currently Raised: {{ campaign?.Campaign_CurrentRaised | currency: 'PHP':'symbol':'1.2-2' }}
             </p>
-            <p class="campaign-start-end">
+            <p class="campaign-start-end text-muted">
               Campaign Period: {{ campaign?.Campaign_Start | date: 'longDate' }} - {{ campaign?.Campaign_End | date: 'longDate' }}
             </p>
-            <p class="campaign-description">{{ campaign?.Campaign_Description }}</p>
+            <p class="campaign-description text-justify">{{ campaign?.Campaign_Description }}</p>
           </div>
         </div>
       </div>
@@ -34,56 +41,68 @@
       <!-- Right Column: Donation Progress and More -->
       <div class="col-md-4">
         <div class="card border-0 shadow-sm p-4">
-          <h4 class="text-muted">Donation Progress</h4>
+          <h4 class="text-muted mb-3">Donation Progress</h4>
           <div class="progress mb-3">
-            <div 
-              class="progress-bar" 
-              role="progressbar" 
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
               [style.width.%]="progressPercentage"
-              aria-valuemin="0" 
-              aria-valuemax="100">
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
               {{ progressPercentage | number: '1.0-0' }}%
             </div>
           </div>
-          
-          <p class="text-muted">
+
+          <p class="text-muted mb-4">
             Raised: {{ campaign?.Campaign_CurrentRaised | currency: 'PHP':'symbol':'1.2-2' }} of {{ campaign?.Campaign_TargetFund | currency: 'PHP':'symbol':'1.2-2' }}
           </p>
-          <button class="btn btn-donate w-100" (click)="openDonationModal(donateModal)">Donate Now</button>
-          
+          <button class="btn btn-primary btn-lg w-100 mb-4" (click)="openDonationModal(donateModal)">Donate Now</button>
+
           <!-- Like/Reaction Button -->
-          <div class="like-section">
-            <button class="like-button" (click)="toggleLike()">
+          <div class="like-section text-center mb-4">
+            <button class="btn btn-outline-primary" (click)="toggleLike()">
               <i [class]="hasLiked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up'"></i>
               {{ likeCount }} {{ likeCount === 1 ? 'Like' : 'Likes' }}
             </button>
           </div>
-          
+
           <!-- Comment Section -->
           <div class="comment-section mt-4">
-            <h3>Comments</h3>
-            <div class="comment" *ngFor="let comment of comments">
-              <p>
-                <img [src]=" 'http://localhost:4000/assets/' + comment.userimage" alt="{{ comment.acc_firstname }}" class="comment-user-image">
+            <h5>Comments</h5>
+            <div *ngFor="let comment of comments" class="comment py-2">
+              <p class="d-flex align-items-center">
+                <img
+                  [src]=" 'http://localhost:4000/assets/' + comment.userimage"
+                  alt="{{ comment.acc_firstname }}"
+                  class="rounded-circle me-2"
+                  width="40"
+                  height="40"
+                />
                 <strong>{{ comment.userfname }} {{ comment.userlname }}</strong>: {{ comment.Comment_Text }}
               </p>
             </div>
 
-            <div class="add-comment">
-              <input type="text" [(ngModel)]="newComment.Comment_Text" placeholder="Add a comment..." />
-              <button (click)="addComment()">Submit</button>
+            <div class="add-comment d-flex mt-3">
+              <input
+                type="text"
+                [(ngModel)]="newComment.Comment_Text"
+                class="form-control me-2"
+                placeholder="Add a comment..."
+              />
+              <button class="btn btn-success" (click)="addComment()">Submit</button>
             </div>
           </div>
 
           <!-- Social Share Buttons -->
-          <div class="button-container mt-3">
-            <button class="icon-button" (click)="shareToFacebook(getCampaignUrl())">
+          <div class="button-container d-flex justify-content-center mt-4 gap-3">
+            <button class="btn btn-outline-secondary rounded-circle" (click)="shareToFacebook(getCampaignUrl())">
               <i class="fab fa-facebook-f"></i>
             </button>
-            <button class="icon-button" (click)="shareToTwitter(getCampaignUrl())">
+            <button class="btn btn-outline-secondary rounded-circle" (click)="shareToTwitter(getCampaignUrl())">
               <i class="fab fa-twitter"></i>
             </button>
-            <button class="icon-button" (click)="shareToInstagram(getCampaignUrl())">
+            <button class="btn btn-outline-secondary rounded-circle" (click)="shareToInstagram(getCampaignUrl())">
               <i class="fab fa-instagram"></i>
             </button>
           </div>
@@ -103,123 +122,62 @@
     <form [formGroup]="donationForm">
       <div class="mb-3">
         <label for="donationAmount" class="form-label">Enter Donation Amount</label>
-        <input type="number" class="form-control" formControlName="donationAmount" 
-               [min]="1" 
-               [placeholder]="'At least ₱1 can change their life'" />
+        <input
+          type="number"
+          class="form-control"
+          formControlName="donationAmount"
+          [min]="1"
+          placeholder="At least ₱1 can change their life"
+        />
       </div>
     </form>
   </div>
-  
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
-    <button type="button" class="btn btn-donate" (click)="confirmDonation(modal)">Confirm Donation</button>
+    <button type="button" class="btn btn-primary" (click)="confirmDonation(modal)">Confirm Donation</button>
   </div>
 </ng-template>
 
 <style>
   /* Custom Styling */
   .campaign-header {
-    background-color: #22262f;
+    background-color: #343a40;
+  }
+  .campaign-image {
+    max-height: 450px;
+    object-fit: cover;
+  }
+  .btn-primary {
+    background-color: #ff6f61;
+    border: none;
+  }
+  .btn-primary:hover {
+    background-color: #e65c55;
+  }
+  .btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+  }
+  .btn-outline-primary:hover {
+    background-color: #007bff;
     color: #fff;
-    padding: 40px 0;
-    text-align: center;
-    position: relative;
-  }
-  .campaign-header h1 {
-    font-size: 2.5rem;
-  }
-  .campaign-details {
-    padding: 30px 0;
   }
   .progress-bar {
-    background-color: #28a745;
-  } 
-  .btn-donate {
-    background-color: #f05a28;
-    color: #fff;
-    font-size: 1rem;
-    border-radius: 20px;
-    padding: 10px 20px;
-    margin-top: 20px;
+    background-color: #ff6f61;
   }
-  .btn-donate:hover {
-    background-color: #d14f24;
+  .like-section button {
+    font-size: 1.1rem;
   }
-  .like-section {
-    margin-top: 20px;
-  }
-  .like-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .like-button i {
-    font-size: 1.5em;
-  }
-  .comment-section {
-    margin-top: 20px;
-  }
-  .comment-section h3 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-  }
-  .comment {
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  .comment-user-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  .add-comment {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  .add-comment input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  .add-comment button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .add-comment button:hover {
-    background-color: #218838;
+  .comment-section h5 {
+    border-bottom: 2px solid #ff6f61;
+    padding-bottom: 5px;
+    color: #343a40;
   }
   .icon-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 2em;
+    font-size: 1.5rem;
     color: #555;
   }
   .icon-button:hover {
-    color: #000;
-  }
-  .button-container {
-    display: flex;
-    gap: 20px; /* Space between buttons */
-    margin-top: 20px; /* Add space above the buttons */
-  }
-  .fab {
-    margin-right: 10px;
+    color: #343a40;
   }
 </style>

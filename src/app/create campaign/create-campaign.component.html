@@ -1,12 +1,12 @@
 <div class="container">
     <br><br><br><br>
-        <h1 class="text-center mb-4">Create and Donate to Campaigns</h1>
+    <div class="background-image-section">
+        <h1>Create and Donate to Campaigns</h1>
+        <button class="btn btn-primary" (click)="openCreateCampaignModal(createCampaignModal)">
+            <i class="bi bi-plus-circle"></i> Create Campaign
+        </button>
+    </div>
     
-        <div class="text-center mb-4">
-            <button class="btn btn-primary" (click)="openCreateCampaignModal(createCampaignModal)">
-                <i class="bi bi-plus-circle"></i> Create Campaign
-            </button>
-        </div>
     
         <!-- Approved Campaigns Section -->
         <div class="campaign-section">
@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
                             <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
-                            <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
+                            <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
                             <span class="badge bg-info">{{ campaign.Campaign_Category }}</span>
     
                             <div *ngIf="campaign.Campaign_ApprovalStatus === 'Approved'" class="text-success mt-2">
@@ -72,7 +72,7 @@
                         <div class="card-body">
                             <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
                             <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
-                            <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
+                            <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
                             <span class="badge bg-info">{{ campaign.Campaign_Category }}</span>
     
                             <div *ngIf="campaign.Campaign_ApprovalStatus === 'Waiting For Approval'" class="text-warning mt-2">
@@ -206,7 +206,7 @@
                             <textarea class="form-control" id="campaignDescription" formControlName="Campaign_Description" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="campaignGoal" class="form-label">Campaign Goal ($)</label>
+                            <label for="campaignGoal" class="form-label">Campaign Goal (₱)</label>
                             <input type="number" class="form-control" id="campaignGoal" formControlName="Campaign_TargetFund" required>
                         </div>
                         <div class="mb-3">

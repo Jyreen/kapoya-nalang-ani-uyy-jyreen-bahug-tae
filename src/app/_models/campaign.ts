@@ -14,4 +14,7 @@ export class Campaign {
     Campaign_ApprovalStatus: string;
     acc_firstname? : string;
     acc_lastname? : string;
+  likeCount: number;
+  likes: number;
+  hasLiked: boolean;
 }

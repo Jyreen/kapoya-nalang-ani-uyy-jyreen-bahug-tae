@@ -53,6 +53,7 @@
         <button (click)="selectEvent(event)" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
           View Details
         </button>
+        
         &nbsp;
         <button (click)="viewParticipants(event.Event_ID); $event.stopPropagation();" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
           View Participants
@@ -107,6 +108,11 @@
         <button (click)="selectEvent(event)" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
           View Details
         </button>
+        &nbsp;
+        <button (click)="deleteEvent(event.Event_ID)" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer;">
+          Delete 
+        </button>
+
       </div>
     </div>
   
@@ -115,7 +121,7 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
       <div *ngIf="rejectEvents.length === 0" class="alert alert-info">No rejected events.</div>
       <div *ngFor="let event of rejectEvents" 
-           (click)="selectEvent(event)" 
+           
            style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
         <div class="badge badge-rejected">
           <h3 style="margin: 0;">{{ event.Event_Start_Date | date: 'd' }}</h3>
@@ -133,6 +139,11 @@
         <button (click)="selectEvent(event)" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
           View Details
         </button>
+        &nbsp;
+        <button (click)="deleteEvent(event.Event_ID)" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer;">
+          Delete 
+        </button>
+
       </div>
     </div>
   
@@ -153,6 +164,12 @@
           <button (click)="openUpdateModal()" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer;">
             Update Event
           </button>
+          <br>
+
+         
+          
+
+
         </div>
       </div>
     </div>

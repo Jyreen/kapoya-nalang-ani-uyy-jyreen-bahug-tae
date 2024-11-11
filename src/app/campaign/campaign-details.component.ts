@@ -9,6 +9,7 @@ import { DonationService } from '../_services/donation.service';
 import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Donation } from '../_models';
 
 
 @Component({
@@ -27,6 +28,8 @@ export class CampaignDetailsComponent implements OnInit {
   likeCount: number = 0;
   donationForm: FormGroup;
   progressPercentage = 0;
+  donors: { name: string; amount: number }[] = [];
+
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +42,8 @@ export class CampaignDetailsComponent implements OnInit {
     private donationService: DonationService,
     private fb: FormBuilder,
   ) {}
+
+  
 
   ngOnInit(): void {
     const campaignId = this.route.snapshot.paramMap.get('id');

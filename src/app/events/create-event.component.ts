@@ -57,6 +57,9 @@ export class CreateEventComponent implements OnInit {
       Event_End_Date: ['', Validators.required],
       Event_Location: ['', Validators.required],
     });
+    
+
+    
   }
 
   ngOnInit() {
@@ -88,6 +91,8 @@ export class CreateEventComponent implements OnInit {
       this.errorMessage = 'No account information found.';
     }
   }
+
+  
 
   viewParticipants(eventId): void {
     // Clear participants before fetching new ones
@@ -321,6 +326,47 @@ export class CreateEventComponent implements OnInit {
       if (status === 0) return event.Event_ApprovalStatus === 0; // Pending
       if (status === -1) return event.Event_ApprovalStatus === -1; // Rejected
       return false;
+
+      
+    });
+
+  }
+  deleteEvent(eventId: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eventService.delete(eventId).subscribe(
+          () => {
+            this.events = this.events.filter(event => event.Event_ID !== eventId); 
+            this.loadEvents();
+  
+            Swal.fire(
+              'Deleted!',
+              'Your event has been deleted.',
+              'success'
+            );
+          },
+          error => {
+            console.error('Error deleting event:', error);
+  
+            Swal.fire({
+              icon: 'error',
+              title: 'Delete Failed',
+              text: `Failed to delete event: ${error.message}`,
+              confirmButtonText: 'OK'
+            });
+          }
+        );
+      }
     });
   }
+  
+  
 }

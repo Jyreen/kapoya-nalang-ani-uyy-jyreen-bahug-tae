@@ -3,51 +3,117 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+  
   body {
-    background-color: #f8f9fa;
+    background-color: #c6d0df;
   }
+  
   .profile-header {
     position: relative;
     text-align: center;
-    background-color: #fff;
-    padding: 2rem 1rem;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
+    background: linear-gradient(135deg, #3f32ff, #ff7c64);
+    color: #fff;
+    padding: 2.5rem 1.5rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
   }
+
   .profile-header img {
     border-radius: 50%;
     width: 120px;
     height: 120px;
     object-fit: cover;
     margin-bottom: 15px;
-    border: 5px solid #fff;
+    border: 5px solid #f0f2f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .profile-header h3 {
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-top: 10px;
+  }
+
+  .profile-header p {
+    font-size: 1rem;
+    color: #f8f9fa;
   }
 
   .card {
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    margin-top: -30px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: scale(1.03);
   }
 
-  .card-img-top {
-    height: 200px;
-    object-fit: cover;
+  .nav-button {
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
   }
 
-  .card-body {
-    text-align: center;
-  }
-  .nav-button.active {
-    background-color: #0d6efd;
+  .nav-button.active,
+  .nav-button:hover {
+    background-color: #0056b3;
     color: #fff;
+    transform: scale(1.05);
   }
-  .campaign-section img {
-    border-radius: 5px;
+
+  .section-header {
+    font-size: 1.8rem;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
   }
-  #passwordError {
-    display: none;
+
+  .section-padding {
+    padding: 2.5rem 0;
   }
+
+  .campaign-image, .event-image, .participant-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary, .btn-success {
+    border-radius: 25px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+
+  .btn-primary:hover, .btn-success:hover {
+    background-color: #003d73;
+  }
+
+  .modal-header, .modal-footer {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  .modal-title {
+    font-weight: bold;
+    color: #343a40;
+  }
+
+  .no-activity-message {
+    color: #6c757d;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
 </style>
+
+
+
 
 <div class="container mt-5">
   <div class="profile-header">
@@ -81,163 +147,58 @@
     </div>
   </div>
 
-  <!-- Your Activities Section -->
   <div *ngIf="currentSection === 'activities'" class="container mt-5 section-padding">
-    <h3>Your Activities</h3>
-    <br><br><br><br>
+    <h3 class="section-header">Your Activities</h3>
+  
     <!-- Campaigns Section -->
     <div *ngIf="campaigns.length > 0">
-        <div *ngFor="let campaign of campaigns" class="card mb-3 shadow-sm">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
-                         alt="{{ campaign.Campaign_Name }} Image" 
-                         class="campaign-image" 
-                         (error)="this.src='assets/jb-symbol-logo.png'" style="height: 400px; width: 400px;">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
-                        <p class="card-text">{{ campaign.Campaign_Description }}</p>
-                        <p class="card-text"><small class="text-muted">Category: {{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</small></p>
-                        <p class="card-text"><small class="text-muted">Status: {{ campaign.Campaign_Status === 0 ? 'Pending' : campaign.Campaign_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
-                        <p class="card-text"><small class="text-muted">Approval Status: {{ campaign.Campaign_ApprovalStatus }}</small></p>
-                    </div>
-                </div>
+      <div *ngFor="let campaign of campaigns" class="card mb-4 shadow-sm">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
+                 alt="{{ campaign.Campaign_Name }} Image" 
+                 class="campaign-image" 
+                 (error)="this.src='assets/jb-symbol-logo.png'">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
+              <p class="card-text">{{ campaign.Campaign_Description }}</p>
+              <p class="card-text"><small class="text-muted">Category: {{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</small></p>
+              <p class="card-text"><small class="text-muted">Status: {{ campaign.Campaign_Status === 0 ? 'Pending' : campaign.Campaign_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-
+  
     <!-- Events Section -->
     <div *ngIf="events.length > 0">
-        <div *ngFor="let event of events" class="card mb-3 shadow-sm">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img [src]="getImagePath('assets/' + event.Event_Image)" 
-                         alt="{{ event.Event_Name }} Image" 
-                         class="event-image" 
-                         (error)="this.src='assets/jb-symbol-logo.png'">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ event.Event_Name }}</h5>
-                        <br><br><br><br>
-                        <p class="card-text">{{ event.Event_Description }}</p>
-                        <p class="card-text"><small class="text-muted">Location: {{ event.Event_Location }}</small></p>
-                        <p class="card-text"><small class="text-muted">Status: {{ event.Event_Status === 0 ? 'Pending' : event.Event_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
-                        <p class="card-text"><small class="text-muted">Approval Status: {{ event.Event_ApprovalStatus }}</small></p>
-                        <p class="card-text"><small class="text-muted">Start Date: {{ event.Event_Start_Date | date:'shortDate' }}</small></p>
-                        <p class="card-text"><small class="text-muted">End Date: {{ event.Event_End_Date | date:'shortDate' }}</small></p>
-                    </div>
-                </div>
+      <div *ngFor="let event of events" class="card mb-4 shadow-sm">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="getImagePath('assets/' + event.Event_Image)" 
+                 alt="{{ event.Event_Name }} Image" 
+                 class="event-image" 
+                 (error)="this.src='assets/jb-symbol-logo.png'">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ event.Event_Name }}</h5>
+              <p class="card-text">{{ event.Event_Description }}</p>
+              <p class="card-text"><small class="text-muted">Location: {{ event.Event_Location }}</small></p>
+              <p class="card-text"><small class="text-muted">Status: {{ event.Event_Status === 0 ? 'Pending' : event.Event_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
             </div>
-        </div>
-    </div>
-
-    <!-- Participants Section -->
-  <div *ngIf="joinedEvents.length > 0" class="mt-5">
-    <div *ngFor="let participant of joinedEvents" class="card mb-3 shadow-sm">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img [src]="getImagePath('assets/' + participant.Event_Image)" 
-               alt="{{ participant.acc_firstname }} {{ participant.acc_lastname }} Image" 
-               class="participant-image" 
-               (error)="this.src='assets/jb-symbol-logo.png'">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">Thank you for volunteering!</h5>
-            <p class="card-text">{{ participant.Event_Name }}</p>
-            <p class="card-text">Joined At: {{ participant.joinedAt | date:'short' }}</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
+  
     <!-- No Activities Message -->
-    <div *ngIf="campaigns.length === 0 && events.length === 0">
-        <p>You don't have any activity.</p>
+    <div *ngIf="campaigns.length === 0 && events.length === 0" class="no-activity-message">
+      <p>You don't have any activity.</p>
     </div>
   </div>
-
- <!-- Accomplished Events Section -->
-<div *ngIf="currentSection === 'events'" class="container mt-5 section-padding">
-  <h3>Accomplished Events</h3>
-  <br><br><br><br>
-  <ng-container *ngIf="accomplishedEvents.length; else noEvents">
-    <ul>
-      <li *ngFor="let event of accomplishedEvents">
-        {{ event.Event_Name }} (ended on {{ event.Event_End_Date | date }})  <!-- Adjust as needed based on your event properties -->
-      </li>
-    </ul>
-  </ng-container>
-  <ng-template #noEvents>
-    <p>No accomplished events available.</p>
-  </ng-template>
-</div>
-
-  <!-- Accomplished Campaigns Section -->
-  <div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
-    <h3>Accomplished Campaigns</h3>
-    <br><br><br><br>
-    <div *ngIf="getAccomplishedCampaigns().length > 0">
-      <div *ngFor="let campaign of getAccomplishedCampaigns()" class="card shadow-sm mb-3">
-        <div class="card-body">
-          <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
-          <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
-          <p>{{ campaign.Campaign_Description }}</p>
-          <button class="btn btn-primary" (click)="openFundRequestModal(fundRequestModal, campaign)">Request To Collect</button>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="getAccomplishedCampaigns().length === 0">
-      <p>No campaigns have been accomplished yet.</p>
-    </div>
-  </div>
-
-  <!-- Fund Request Modal -->
-  <ng-template #fundRequestModal let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title">Request Funds</h5>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="mb-3">
-          <label for="bank" class="form-label">Select Bank</label>
-          <select class="form-select" [(ngModel)]="selectedBank" name="bank" required>
-            <option value="" disabled>Select a bank</option>
-            <option *ngFor="let bank of banks" [value]="bank">{{ bank }}</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="accountNumber" class="form-label">Account Number</label>
-          <input type="text" class="form-control" id="accountNumber" [(ngModel)]="accountNumber" name="accountNumber" required>
-        </div>
-        <div class="mb-3">
-          <button type="button" class="btn btn-success" (click)="submitFundRequest()">Submit Request</button>
-        </div>
-      </form>
-    </div>
-  </ng-template>
-
-  <div *ngIf="currentSection === 'rewards'" class="container mt-5">
-    <div class="row">
-      <div *ngFor="let reward of rewards" class="col-md-4 mb-4">
-        <div class="card shadow-sm">
-          <img [src]="'http://localhost:4000/assets/' + reward.reward_Image" class="card-img-top" alt="{{ reward.reward_Name }}" style="height: 200px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title">{{ reward.reward_Name }}</h5>
-            <p class="card-text">{{ reward.reward_Description }}</p>
-            <p class="text-muted">Points Required: {{ reward.reward_PointCost }}</p>
-            <button class="btn btn-primary" (click)="openRewardModal(deliveryModal, reward)">Redeem</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
  <!-- Delivery Modal -->
 <ng-template #deliveryModal let-modal>
   <div class="modal-header">

@@ -1,3 +1,31 @@
+.background-image-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+                      url('https://images.pexels.com/photos/17257618/pexels-photo-17257618/free-photo-of-silhouettes-of-people-raising-arms-at-golden-hour.jpeg'); /* Replace with the path to your image */
+    background-size: cover;
+    background-position: center bottom;
+    color: #ffffff;
+    padding: 180px 0; /* Adjust padding as needed */
+    text-align: center;
+}
+
+.background-image-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem; /* Space below heading */
+}
+
+.background-image-section .btn-primary {
+    margin-top: 1rem; /* Space above button */
+    background-color: #28a745; /* Modify to match your theme */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+}
+
+.background-image-section .btn-primary:hover {
+    background-color: #218838; /* Darker shade for hover */
+}
+
+
 .campaign-card {
     transition: transform 0.2s;
     border-radius: 0.5rem;

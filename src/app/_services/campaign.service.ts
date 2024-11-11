@@ -69,10 +69,13 @@ approve(id: number): Observable<Campaign> {
     return this.http.get<Campaign>(`${this.baseUrl}/${id}`);
   }
 
+  
+
   // Add a method to get approved campaigns
   getApprovedCampaigns(): Observable<Campaign[]> {
     return this.http.get<Campaign[]>(`${this.baseUrl}?status=approved`);
   }
+
 
 
 

@@ -20,6 +20,11 @@ import { DashboardSwitchComponent } from './dashboard-switch/dashboard-switch.co
 import { EventListComponent } from './event-list/event-list.component';
 import { EventDetailsComponent } from './event-list/event-details.component';
 
+// donor dashboard
+
+import { DonorDashboardComponent } from './donordash/donor-dashboard.component';
+import { BeneficiaryDashboardComponent } from './beneficary/beneficiary-dashboard.component';
+
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const adminModule = () => import('./admin/admin.module').then(x => x.AdminModule);
 const profileModule = () => import('./profile/profile.module').then(x => x.ProfileModule);
@@ -31,6 +36,8 @@ const routes: Routes = [
     { path: 'campaign', component: CampaignComponent},
     { path: 'create-campaign', component: CreateCampaignComponent }, // Route for creating a campaign
     { path: 'event-details/:id', component: EventDetailsComponent},
+    { path: 'donor-dashboard', component: DonorDashboardComponent},
+    { path: 'beneficiary-dashboard', component: BeneficiaryDashboardComponent},
 
     // Protected route with AuthGuard for home
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
